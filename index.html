@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === Fade-in Page Load === */
+    body {
+      opacity: 0;
+      transition: opacity 2s ease; /* longer fade-in */
+    }
+
+    body.visible {
+      opacity: 1;
+    }
+
+    /* === Fade-out on Page Exit === */
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    /* === Added Animations === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Typewriter cursor effect */
+    #welcome-message {
+      border-right: 2px solid #333;
+      padding-right: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dark Mode Toggle Button -->
+  <div class="toggle-theme-container">
+    <button id="toggle-theme">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Centered Profile Picture -->
+  <div class="home-container">
+    <img src="image/Welcome.gif" alt="Welcome Image" class="Profile-img">
+    <div class="welcome-text" id="welcome-message">
+      <!-- Welcome text will be injected via JS -->
+    </div>
+  </div>
+  
+
+  <!-- Footer -->
+  <footer>
+    <p>© <span id="year"></span> MyPortfolio | Designed by Tandin Wangmo</p>
+  </footer>
+
+  <script>
+    // ===== JavaScript Enhancements =====
+
+    // 1. Fade-in on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('visible');
+    });
+
+    // 2. Dynamic Welcome Text
+    const welcomeText = document.getElementById("welcome-message");
+    welcomeText.textContent = "I am Tandin Wangmo, an ICT teacher in training and passionate about empowering students through technology.";
+
+    // 3. Set current year dynamically
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 4. Dark Mode Toggle
+    const toggleButton = document.getElementById("toggle-theme");
+
+    function loadTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+        toggleButton.textContent = "☀️ Light Mode";
+      } else {
+        toggleButton.textContent = "🌙 Dark Mode";
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-theme");
+      const isDark = document.body.classList.contains("dark-theme");
+      toggleButton.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+
+    window.addEventListener("DOMContentLoaded", loadTheme);
+    toggleButton.addEventListener("click", toggleTheme);
+
+    // 5. Page Exit Fade-Out on Link Click
+    function handleLinkClicks() {
+      const links = document.querySelectorAll('a');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.href;
+
+          // Add fade-out class
+          document.body.classList.add('fade-out');
+
+          // Wait for transition then navigate
+          setTimeout(() => {
+            window.location.href = href;
+          }, 1500); // same as CSS fade-out duration
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', handleLinkClicks);
+
+    // Create the main div element
+    const pageArrows = document.createElement("div");
+    pageArrows.classList.add("page-arrows", "reveal");
+
+    // Create the link element
+    const link = document.createElement("a");
+    link.href = "about.html";
+    link.textContent = "About Me →";
+
+    // Append the link inside the div
+    pageArrows.appendChild(link);
+
+    // Finally, add the div to the body (or another container)
+    document.body.appendChild(pageArrows);
+
+    // ===== Additional Animations (Typewriter + Scroll Reveal + Arrow Fade) =====
+
+    // Typewriter animation
+    const textContent = "I am Tandin Wangmo, an ICT teacher in training and passionate about empowering students through technology.";
+    let i = 0;
+    welcomeText.textContent = "";
+    function typeEffect() {
+      if (i < textContent.length) {
+        welcomeText.textContent += textContent.charAt(i);
+        i++;
+        setTimeout(typeEffect, 40);
+      }
+    }
+    window.addEventListener("load", typeEffect);
+
+    // Animate page arrow fade-in
+    pageArrows.style.opacity = "0";
+    pageArrows.style.transform = "translateY(20px)";
+    setTimeout(() => {
+      pageArrows.style.transition = "all 1s ease";
+      pageArrows.style.opacity = "1";
+      pageArrows.style.transform = "translateY(0)";
+    }, 2500);
+
+    // Scroll reveal effect
+    const revealElements = document.querySelectorAll(".reveal");
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const position = el.getBoundingClientRect().top;
+        if (position < windowHeight - 100) {
+          el.classList.add("active");
+        }
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  </script>
+
+</body>
+</html>
+

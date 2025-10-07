@@ -1,0 +1,258 @@
+/* Reset some default browser styles */
+body, h1, p, ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General body style */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e6cdd9;
+  color: #333;
+  text-align: center;
+  line-height: 1.6;
+  font-size: clamp(14px, 2vw, 18px); /* Adaptive typography */
+}
+
+/* Navbar */
+.navbar {
+  background-color: #222;
+  padding: 15px 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #00bcd4;
+}
+
+/* Home Container */
+.home-container {
+  margin-top: 30px;
+}
+
+.Profile-img {
+  width: 500px;        
+  max-width: 80%;      
+  height: auto;        
+  border-radius: 10px;
+  border: 4px solid #00bcd4;
+  object-fit: contain; 
+  margin-bottom: 15px;
+}
+
+.welcome-text {
+  font-size: clamp(18px, 2.5vw, 26px); /* Adaptive typography*/
+  font-weight: bold;
+  color: #aa0e0e;
+  margin-top: 10px;
+}
+/* About Me page profile image */
+.aboutme-img {
+  width: 300px; /* keep it smaller */
+  height: 300px;
+  border-radius: 50%;
+  border: 4px solid #9c308e; /* orange border or your choice */
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* Education Section */
+.education {
+  margin: 30px auto;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.education ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.education li {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edu-img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 4px solid rgb(17, 17, 17); /* Orange outline */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  padding: 15px 0;
+  background-color: #222;
+  color: white;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .welcome-text {
+    font-size: 18px;
+  }
+
+  .education ul {
+    grid-template-columns: 1fr;
+  }
+ 
+}
+
+
+
+/* === Toggle Theme Button Positioned Top Right === */
+.toggle-theme-container {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Toggle Theme Button Styling */
+#toggle-theme {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#toggle-theme:hover {
+  background-color: #0056b3;
+}
+
+/* === Optional: Dark Theme Styling === */
+.dark-theme {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+.dark-theme .navbar {
+  background-color: #1f1f1f;
+}
+
+.dark-theme .nav-links a {
+  color: #f0f0f0;
+}
+
+.dark-theme footer {
+  background-color: #1f1f1f;
+  color: #f0f0f0;
+}
+
+
+
+
+
+
+/* ==== JavaScript Feature Styles ==== */
+
+/* Top-right Buttons */
+.top-buttons {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+/* Theme Toggle Buttons */
+.theme-toggle {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:hover {
+  background: #0056b3;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #f2f2f2;
+}
+
+/* Image Hover Animation */
+.aboutme-img {
+  transition: transform 1s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-buttons {
+    flex-direction: column;
+    right: 10px;
+  }
+
+  .theme-toggle {
+    width: 100%;
+    font-size: 13px;
+  }
+}
+
+
+
+/* Page Navigation Arrows */
+.page-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  font-size: 1.2rem;
+}
+
+.page-arrows a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.page-arrows a:hover {
+  color: #ff6600;
+  transform: translateX(5px);
+}
+
+
+

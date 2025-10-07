@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === Fade-in on Load === */
+    body {
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    body.visible {
+      opacity: 1;
+    }
+
+    /* === Fade-out on Link Click === */
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    /* === Scroll Reveal === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === Project Item Style === */
+    .project-item {
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      margin: 10px auto;
+      width: 80%;
+    }
+
+    .project-item span {
+      flex: 1;
+      text-align: center;
+    }
+
+    .project-item:hover {
+      transform: scale(1.05);
+      background-color: #f0f0f0;
+    }
+
+    /* === Remove Button === */
+    .remove-btn {
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-left: 15px;
+    }
+    .remove-btn:hover {
+      background-color: darkred;
+      transform: scale(1.1);
+    }
+
+    /* === Input Container === */
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    #newProjectInput {
+      display: none;
+      width: 60%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #newProjectInput.show {
+      display: block;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar reveal">
+    <ul class="nav-links">
+      <li><a href="index.html">Home Page</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Top Right Buttons -->
+  <div class="top-buttons reveal">
+    <button class="theme-toggle" id="themeBtn">🌙 Dark Mode</button>
+    <button class="theme-toggle" id="changeHeadingBtn">🎨 Change Heading</button>
+  </div>
+
+  <!-- Projects Section -->
+  <section class="content reveal">
+    <h1 id="heading" class="reveal">My Projects</h1>
+    <ul class="project-list">
+      <li class="project-item reveal">
+        <span><strong>Personal Portfolio Website:</strong> Built with HTML, CSS, and enhanced using JavaScript for interactivity.</span>
+        <button class="remove-btn">Remove</button>
+      </li>
+      <li class="project-item reveal">
+        <span><strong>Data Visualization Dashboard:</strong> Created using Python to display datasets in graphical form.</span>
+        <button class="remove-btn">Remove</button>
+      </li>
+    </ul>
+
+    <!-- Input Centered -->
+    <div class="input-container">
+      <input type="text" id="newProjectInput" placeholder="Type your new project and press Enter">
+      <button id="addProjectBtn" class="theme-toggle reveal">➕ Add New Project</button>
+    </div>
+  </section>
+
+  <!-- Navigation Arrows -->
+  <div class="page-arrows">
+    <a href="skills.html" class="arrow-prev">← Skills</a>
+    <a href="contact.html" class="arrow-next">Contact →</a>
+  </div>
+
+  <footer class="reveal">
+    <p>© <span id="year"></span> MyPortfolio | Designed by Tandin Wangmo</p>
+  </footer>
+
+  <script>
+    // === Page Fade-in ===
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('visible');
+    });
+
+    // === Set Current Year ===
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // === Dark Mode Toggle ===
+    const themeBtn = document.getElementById("themeBtn");
+    function loadTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeBtn.textContent = "☀️ Light Mode";
+      } else {
+        themeBtn.textContent = "🌙 Dark Mode";
+      }
+    }
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+    window.addEventListener("DOMContentLoaded", loadTheme);
+    themeBtn.addEventListener("click", toggleTheme);
+
+    // === Change Heading Color ===
+    const heading = document.getElementById("heading");
+    const changeHeadingBtn = document.getElementById("changeHeadingBtn");
+    changeHeadingBtn.addEventListener("click", () => {
+      heading.style.color = heading.style.color === "teal" ? "purple" : "teal";
+    });
+
+    // === Add Project Dynamically ===
+    const addProjectBtn = document.getElementById("addProjectBtn");
+    const newProjectInput = document.getElementById("newProjectInput");
+    const projectList = document.querySelector(".project-list");
+
+    addProjectBtn.addEventListener("click", () => {
+      newProjectInput.classList.toggle("show");
+      newProjectInput.focus();
+    });
+
+    newProjectInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const projectText = newProjectInput.value.trim();
+        if (projectText !== "") {
+          const newProject = document.createElement("li");
+          newProject.classList.add("project-item", "reveal");
+          newProject.innerHTML = `
+            <span><strong>${projectText}:</strong> Added using JavaScript dynamically.</span>
+            <button class="remove-btn">Remove</button>
+          `;
+
+          projectList.appendChild(newProject);
+
+          // Animate new project
+          requestAnimationFrame(() => {
+            newProject.classList.add("visible");
+          });
+
+          // Hover effect
+          newProject.addEventListener("mouseover", () => {
+            newProject.style.transform = "scale(1.05)";
+            newProject.style.backgroundColor = "#f0f0f0";
+          });
+          newProject.addEventListener("mouseout", () => {
+            newProject.style.transform = "scale(1)";
+            newProject.style.backgroundColor = "";
+          });
+
+          // Remove functionality
+          newProject.querySelector(".remove-btn").addEventListener("click", () => {
+            newProject.style.opacity = "0";
+            newProject.style.transform = "translateY(20px)";
+            setTimeout(() => newProject.remove(), 500);
+          });
+
+          newProjectInput.value = "";
+          newProjectInput.classList.remove("show");
+        }
+      }
+    });
+
+    // === Remove existing projects ===
+    document.querySelectorAll(".remove-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const project = btn.closest(".project-item");
+        project.style.opacity = "0";
+        project.style.transform = "translateY(20px)";
+        setTimeout(() => project.remove(), 500);
+      });
+    });
+
+    // === Scroll Reveal ===
+    function handleReveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < windowHeight - 50) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', handleReveal);
+    window.addEventListener('DOMContentLoaded', handleReveal);
+
+    // === Fade-out Links ===
+    function handleLinkClicks() {
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.href;
+          document.body.classList.add('fade-out');
+          setTimeout(() => window.location.href = href, 1500);
+        });
+      });
+    }
+    window.addEventListener('DOMContentLoaded', handleLinkClicks);
+  </script>
+
+</body>
+</html>
+

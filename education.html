@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Education - My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Fade-in on load */
+    body {
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    body.visible {
+      opacity: 1;
+    }
+
+    /* Fade-out on leaving page */
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Image hover effect */
+    .edu-img {
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar reveal">
+    <ul class="nav-links">
+      <li><a href="index.html">Home Page</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Top Right Buttons -->
+  <div class="top-buttons reveal">
+    <button class="theme-toggle" id="themeBtn">🌙 Dark Mode</button>
+    <button class="theme-toggle" id="changeHeadingBtn">🎨 Change Heading</button>
+  </div>
+
+  <!-- Education Section -->
+  <section class="content reveal">
+    <h1 id="heading" class="reveal">My Education</h1>
+    <ul class="education-list">
+      <li class="reveal">
+        <strong>Bachelor’s Degree:</strong> Information Technology, Samtse College of Education (2025 - Present)
+        <br>
+        <img src="image/samtse college.JPG" alt="College Image" class="edu-img reveal">
+      </li>
+
+      <li class="reveal">
+        <strong>High School:</strong> Tashitse Higher Secondary School (2019 - 2022)
+        <br>
+        <img src="image/tashitse.JPG" alt="High School Image" class="edu-img reveal">
+      </li>
+
+      <li class="reveal">
+        <strong>Secondary School:</strong> Wamrong Lower Secondary School (2016 - 2018)
+        <br>
+        <img src="image/Wamrong school.jpg" alt="Secondary School Image" class="edu-img reveal">
+      </li>
+    </ul>
+  </section>
+  <!-- Page Navigation Arrows -->
+<div class="page-arrows reveal">
+  <a href="about.html" class="arrow-prev">← About Me</a>
+  <a href="skills.html" class="arrow-next">Skills →</a>
+</div>
+
+  <footer class="reveal">
+    <p>© <span id="year"></span> MyPortfolio | Designed by Tandin Wangmo</p>
+  </footer>
+
+  <script>
+    // === Page Fade-in on Load ===
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('visible');
+    });
+
+    // === Set Current Year ===
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // === Dark Mode Toggle with localStorage ===
+    const themeBtn = document.getElementById("themeBtn");
+    function loadTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeBtn.textContent = "☀️ Light Mode";
+      } else {
+        themeBtn.textContent = "🌙 Dark Mode";
+      }
+    }
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+    window.addEventListener("DOMContentLoaded", loadTheme);
+    themeBtn.addEventListener("click", toggleTheme);
+
+    // === Change Heading Color ===
+    const heading = document.getElementById("heading");
+    const changeHeadingBtn = document.getElementById("changeHeadingBtn");
+    changeHeadingBtn.addEventListener("click", () => {
+      heading.style.color = heading.style.color === "teal" ? "purple" : "teal";
+    });
+
+    // === Image Hover Effect ===
+    const images = document.querySelectorAll(".edu-img");
+    images.forEach(img => {
+      img.addEventListener("mouseover", () => img.style.transform = "scale(1.1)");
+      img.addEventListener("mouseout", () => img.style.transform = "scale(1)");
+    });
+
+    // === Scroll Reveal Logic ===
+    function handleReveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < windowHeight - 50) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', handleReveal);
+    window.addEventListener('DOMContentLoaded', handleReveal);
+
+    // === Page Fade-out on Link Click ===
+    function handleLinkClicks() {
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.href;
+          document.body.classList.add('fade-out');
+          setTimeout(() => window.location.href = href, 1500);
+        });
+      });
+    }
+    window.addEventListener('DOMContentLoaded', handleLinkClicks);
+  </script>
+
+</body>
+</html>
+
+
